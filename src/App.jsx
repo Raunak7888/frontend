@@ -9,7 +9,7 @@ import ResetPage from './components/reset';
 import Ok from './components/ok';
 import CreateGroup from './components/CreateGroup';
 import Logout from './components/logout';
-import FileUpload from './components/Files';
+import FileView from './components/FilesView';
 function App() {
   return (
     <Router>
@@ -22,7 +22,7 @@ function App() {
         <Route path="/reset" element={<ResetPage />} />
         <Route path="/Group" element={<CreateGroup />} />
         <Route path="/logout" element={<Logout/>}/>
-        <Route path="/files" element={<FileUpload/>}/>
+        <Route path="/files" element={<FileView/>}/>
 
       </Routes>
     </Router>

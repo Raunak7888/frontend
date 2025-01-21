@@ -3,14 +3,21 @@ import WebSocketService from "./WebSocketService";
 import OnlineStatusService from "./OnlineStatusService";
 import ChatManager from "./ChatManager";
 import { getCurrentUserWithToken, fetchMessagesUntilLastDay } from "./api";
+import FileUpload from "./Files";
+import FileView from "./FilesView";
 
 const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
   const [messages, setMessages] = useState([]);
   const [messageContent, setMessageContent] = useState("");
   const [status, setStatus] = useState("Unknown");
   const [currentUser, setCurrentUser] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const chatEndRef = useRef(null);
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -168,26 +175,36 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
       <div className="message-display">
         {messages.map((msg, index) => (
           <div key={msg.id || `msg-${index}`}>
-            <div
-              className={
-                msg.senderId == currentUser
-                  ? "message-sent"
-                  : "message-received"
-              }
-            >
-              {msg.content}
-              {msg.senderId == currentUser && (
-                <span className="message-status">
-                  {msg.status === "pending" ? "❌" : "✅"}
-                </span>
-              )}
-            </div>
+            {msg.content === "---FILE---" ? (
+              <FileView filename={msg.fileName} isSent={msg.senderId == currentUser}/>
+            ) : (
+              <div
+                className={
+                  msg.senderId == currentUser
+                    ? "message-sent"
+                    : "message-received"
+                }
+              >
+                {msg.content}
+                {msg.senderId == currentUser && (
+                  <span className="message-status">
+                    {msg.status === "pending" ? "❌" : "✅"}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         ))}
         <div ref={chatEndRef} />
       </div>
 
       <div className="input-area">
+        <button className="file-button" onClick={toggleModal}>
+          <span>+</span>
+        </button>
+
+        {/* Show the FileUpload modal when isModalOpen is true */}
+        {isModalOpen && <FileUpload onClose={toggleModal} currentUser={currentUser} receiverId={recipientId} setMessages={setMessages} />}
         <input
           type="text"
           className="message-input"

@@ -15,6 +15,19 @@ const ChatManager = {
     }
   },
 
+  sendImage(stompClient, fileDTO) {
+    console.log(fileDTO.receiverId,fileDTO.userId ,fileDTO.tempID, fileDTO.status);
+    const destination = `/app/send/image`; // Private message endpoint
+    // messageDTO.isGroup
+    //   ? `/app/group/message` // Group message endpoint
+    //   : 
+      
+    console.log(destination + "Destination For Sending Message");
+    if (stompClient) {
+      stompClient.send(destination, {}, JSON.stringify(fileDTO));
+    }
+  },
+
   /**
    * Subscribes to messages for a specific recipient (group or private)
    * @param {Object} stompClient - The Stomp client instance
