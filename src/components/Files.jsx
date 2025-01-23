@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import ChatManager from "./ChatManager";
 import WebSocketService from "./WebSocketService";
 
-const FileUpload = ({ onClose,currentUser,receiverId,setMessages }) => {
+const FileUpload = ({ onClose, currentUser, receiverId, setMessages }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState("");
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -16,67 +15,74 @@ const FileUpload = ({ onClose,currentUser,receiverId,setMessages }) => {
       alert("Please select a file to upload.");
       return;
     }
-  
+
     setUploading(true);
-    setUploadStatus("");
-  
+
     const reader = new FileReader();
     reader.onload = async (e) => {
       const base64File = e.target.result;
-  
+
+      // Remove the prefix (e.g., "data:image/png;base64,")
+      const plainBase64 = base64File.split(",")[1];
+      const filenameWithNoSpace = file.name.replace(/\s+/g, "");
+
+      const tempId = Date.now();
+
       const fileDTO = {
-        file: base64File, // Encoded file
-        fileName: file.name,
+        file: plainBase64,
+        fileName: filenameWithNoSpace,
         fileType: file.type,
+        fileSize: file.size,
         userId: currentUser,
         receiverId: receiverId,
-        tempID: Date.now(),
+        tempId: tempId,
         status: "pending",
       };
-  
+
+      
+
+
+      // Add the file immediately to the chat UI with a "pending" status
+      
+
+      // Send the file to the server
       ChatManager.sendImage(
         WebSocketService.client,
         fileDTO,
-        (response) => {
-          if (response.success) {
-            setMessages((prevMessages) => [...prevMessages, response]);
-            setUploadStatus("File uploaded successfully!");
-          } else {
-            setUploadStatus("Failed to upload file.");
-          }
-          setUploading(false);
+        () => {
+          console.log("File sent successfully.");
         }
       );
+
+      // Close the modal after uploading
+      onClose();
     };
-  
+
     reader.readAsDataURL(file); // Converts the file to a base64 string
   };
-  
-  
 
   return (
-    <div style={modalStyles.overlay}>
-      <div style={modalStyles.content}>
-        <h2 style={modalStyles.h2}>Upload a File</h2>
+    <div style={styles.overlay}>
+      <div style={styles.content}>
+        <h2 style={styles.h2}>Upload a File</h2>
         <input
           className="fileChooser"
-          style={modalStyles.input}
+          style={styles.input}
           type="file"
           onChange={handleFileChange}
         />
         <button
           className="card-button"
-          style={modalStyles.button}
+          style={styles.button}
           onClick={handleUpload}
           disabled={uploading}
         >
           {uploading ? "Uploading..." : "Upload"}
         </button>
-        {uploadStatus && <p>{uploadStatus}</p>}
         <button
           className="closeButton"
           onClick={onClose}
-          style={modalStyles.closeButton}
+          style={styles.closeButton}
         >
           x
         </button>
@@ -86,7 +92,7 @@ const FileUpload = ({ onClose,currentUser,receiverId,setMessages }) => {
 };
 
 // Modal styles
-const modalStyles = {
+const styles = {
   h2: {
     marginBottom: "20px",
     textAlign: "center",
@@ -101,7 +107,6 @@ const modalStyles = {
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    color: "#FFF",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -109,23 +114,40 @@ const modalStyles = {
   content: {
     position: "relative",
     width: "30%",
-    height: "40%",
     padding: "20px",
     backgroundColor: "#1e2124",
     borderRadius: "5px",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
   },
+  input: {
+    width: "100%",
+    marginBottom: "10px",
+    padding: "10px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  button: {
+    width: "100%",
+    padding: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#87cbf4",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "bold",
+  },
   closeButton: {
     position: "absolute",
     top: "5px",
     right: "10px",
-    padding: "0px",
+    padding: "5px",
     color: "white",
     border: "none",
     width: "30px",
     height: "30px",
-    borderRadius: "50px",
+    borderRadius: "50%",
     cursor: "pointer",
+    backgroundColor: "#ff5f5f",
   },
 };
 

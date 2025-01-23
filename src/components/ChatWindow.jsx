@@ -83,14 +83,61 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
       WebSocketService.client,
       currentUser,
       (ackMessage) => {
-        const { tempId, status } = ackMessage;
-        setMessages((prev) =>
-          prev.map((msg) => (msg.tempId === tempId ? { ...msg, status } : msg))
-        );
+        console.log("Received ack:", ackMessage);
+
+        if (ackMessage.content !== "---FILE---") {
+          // Handle normal text message acknowledgment
+          const { tempId, status } = ackMessage;
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.tempId === tempId ? { ...msg, status } : msg
+            )
+          );
+        } else {
+          // Handle file acknowledgment
+          const {
+            id,
+            content,
+            senderId,
+            receiverId,
+            tempId,
+            fileName,
+            status,
+          } = ackMessage;
+
+          setMessages((prev) => {
+            const exists = prev.some((msg) => msg.tempId === tempId);
+            if (exists) {
+              // Update the status of the existing file message
+              return prev.map((msg) =>
+                msg.tempId === tempId ? { ...msg, status } : msg
+              );
+            } else {
+              // Add the new file message if it doesn't exist
+              const newMessage = {
+                id,
+                content,
+                senderId,
+                receiverId,
+                tempId,
+                fileName,
+                status,
+              };
+              return [...prev, newMessage];
+            }
+          });
+
+          // Log updated messages safely using a callback
+          setMessages((prev) => {
+            console.log("Updated Messages: ", prev);
+            return prev; // Return the unchanged state
+          });
+        }
       },
       isGroup,
       recipientId
     );
+    console.log("Updated Messages: ", messages);
 
     if (!isGroup) {
       const statusSubscription = OnlineStatusService.subscribeToStatusUpdates(
@@ -175,24 +222,29 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
       <div className="message-display">
         {messages.map((msg, index) => (
           <div key={msg.id || `msg-${index}`}>
-            {msg.content === "---FILE---" ? (
-              <FileView filename={msg.fileName} isSent={msg.senderId == currentUser}/>
-            ) : (
-              <div
-                className={
-                  msg.senderId == currentUser
-                    ? "message-sent"
-                    : "message-received"
-                }
-              >
-                {msg.content}
-                {msg.senderId == currentUser && (
-                  <span className="message-status">
-                    {msg.status === "pending" ? "❌" : "✅"}
-                  </span>
-                )}
-              </div>
-            )}
+            {msg.content !== null ? (
+              msg.content === "---FILE---" ? (
+                <FileView
+                  filename={msg.fileName}
+                  isSent={msg.senderId == currentUser}
+                />
+              ) : (
+                <div
+                  className={
+                    msg.senderId == currentUser
+                      ? "message-sent"
+                      : "message-received"
+                  }
+                >
+                  {msg.content}
+                  {msg.senderId == currentUser && (
+                    <span className="message-status">
+                      {msg.status == "pending" ? "❌" : "✅"}
+                    </span>
+                  )}
+                </div>
+              )
+            ) : null}
           </div>
         ))}
         <div ref={chatEndRef} />
@@ -204,7 +256,14 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
         </button>
 
         {/* Show the FileUpload modal when isModalOpen is true */}
-        {isModalOpen && <FileUpload onClose={toggleModal} currentUser={currentUser} receiverId={recipientId} setMessages={setMessages} />}
+        {isModalOpen && (
+          <FileUpload
+            onClose={toggleModal}
+            currentUser={currentUser}
+            receiverId={recipientId}
+            setMessages={setMessages}
+          />
+        )}
         <input
           type="text"
           className="message-input"
