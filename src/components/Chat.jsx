@@ -3,6 +3,9 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import Message from './ChatManager';
 import UserStatus from './OnlineStatusService';
+import config from './backend_url';
+
+const API_BASE_URL = config.apiBaseUrl;
 
 const Chat = ({ currentUser }) => {
     const [stompClient, setStompClient] = useState(null);
@@ -21,7 +24,7 @@ const Chat = ({ currentUser }) => {
 
     useEffect(() => {
         // Initialize WebSocket connection
-        const sockInstance = new SockJS('http://localhost:8080/chat');
+        const sockInstance = new SockJS(`${API_BASE_URL}/chat`);
         const client = Stomp.over(sockInstance);
         const token = getJwtToken();
         const headers = token ? { Authorization: token } : {};

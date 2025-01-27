@@ -2,6 +2,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from './backend_url';
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`; 
+
 
 const VerifyPage = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +16,7 @@ const VerifyPage = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/auth/verify', {
+      const response = await axios.post(`${API_BASE_URL}/verify`, {
         email: email,
         verificationCode: verificationCode,
       });

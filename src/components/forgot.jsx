@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from './backend_url';
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`; // Update with your actual backend URL
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +15,7 @@ const ForgotPasswordPage = () => {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/auth/forget', { email });
+      const response = await axios.post(`${API_BASE_URL}/forget`, { email });
 
       if (response.status === 200) {
         setMessage('Check your email for a password reset link!');

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import config from "./backend_url";
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`;
 
 const CreateGroup = () => {
   const location = useLocation();
@@ -32,7 +35,7 @@ const CreateGroup = () => {
 
     try {
       // Send POST request to the backend
-      const response = await axios.post("http://localhost:8080/auth/create", payload);
+      const response = await axios.post(`${API_BASE_URL}/create`, payload);
 
       // Handle success response
       setResponseMessage(`Group created successfully: ${response.data.groupName}`);
@@ -59,7 +62,7 @@ const CreateGroup = () => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/auth/Data/Search`, {
+      const response = await axios.get(`${API_BASE_URL}/Data/Search`, {
         params: { query: e.target.value },
       });
       const filteredResults = response.data.filter((user) => !user.group);

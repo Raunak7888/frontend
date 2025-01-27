@@ -40,7 +40,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
   }, [messages]);
 
   const loadMessages = useCallback(async () => {
-    if (!recipientId || !currentUser || currentUser === recipientId) return;
+    if (!recipientId || !currentUser || currentUser == recipientId) return;
 
     try {
       const previousMessages = await fetchMessagesUntilLastDay(

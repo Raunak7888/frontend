@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "./backend_url";
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`; // Update with your actual backend URL
 
 const FileView = ({ filename, isSent }) => {
   const [file, setFile] = useState(null); // Store a single file data from the backend
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state for image preview
-  const backendUrl = "http://localhost:8080/auth/files/show"; // Update with your actual backend URL
+  const backendUrl = `${API_BASE_URL}/files/show`; // Update with your actual backend URL
 
   useEffect(() => {
     const fetchFile = async () => {

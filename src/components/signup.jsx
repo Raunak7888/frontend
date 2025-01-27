@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import config from './backend_url';
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`; 
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +20,7 @@ const SignupPage = () => {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/signup', {
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
         email,
         username,
         password,

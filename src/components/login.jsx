@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import config from './backend_url';
 import "./init";
+
+const API_BASE_URL = `${config.apiBaseUrl}/auth`; // Update with your actual backend URL
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +21,7 @@ const LoginPage = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', { email, password });
+      const response = await axios.post(`${API_BASE_URL}/login`, { email, password });
 
       if (response.status === 200) {
         const token = response.data.token;

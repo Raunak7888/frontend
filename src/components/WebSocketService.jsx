@@ -1,12 +1,16 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import config from './backend_url';
+
+const API_BASE_URL = config.apiBaseUrl; 
+
 
 const WebSocketService = {
     client: null,
 
     // Connect method
     connect(onConnected, onMessageReceived, token) {
-        const socket = new SockJS('http://localhost:8080/chat');  // Your WebSocket endpoint
+        const socket = new SockJS(`${API_BASE_URL}/chat`);  // Your WebSocket endpoint
         this.client = Stomp.over(socket);
 
         const headers = token ? { Authorization: token } : {};

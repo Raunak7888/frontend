@@ -1,7 +1,8 @@
 // src/components/api.js
 import axios from 'axios';
+import config from './backend_url';
 
-const API_BASE_URL = 'http://localhost:8080/auth';
+const API_BASE_URL = `${config.apiBaseUrl}/auth`;
 
 export const getUserData = async (userId) => {
     try {
@@ -18,7 +19,7 @@ export const getUserData = async (userId) => {
 export const fetchMessagesUntilLastDay = async (senderId, receiverId,isGroup) => {
 
     try {
-        const response = await axios.get('http://localhost:8080/auth/messages/user', {
+        const response = await axios.get(`${API_BASE_URL}/messages/user`, {
             params: {
                 senderId,
                 receiverId,
