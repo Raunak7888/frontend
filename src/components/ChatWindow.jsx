@@ -40,9 +40,10 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
   }, [messages]);
 
   const loadMessages = useCallback(async () => {
-    if (!recipientId || !currentUser || currentUser == recipientId) return;
+    if (!recipientId || !currentUser || currentUser === recipientId) return;
 
     try {
+      console.log("Hey Trying to get the previous messages!!!");
       const previousMessages = await fetchMessagesUntilLastDay(
         currentUser,
         recipientId,
@@ -151,11 +152,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
         recipientId
       );
 
-      return () => {
-        statusSubscription.unsubscribe();
-        messageSubscription.unsubscribe();
-        senderSubscription.unsubscribe();
-      };
+      
     }
 
     return () => {
@@ -237,7 +234,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
                   }
                 >
                   {msg.content}
-                  {msg.senderId == currentUser && (
+                  {msg.senderId === currentUser && (
                     <span className="message-status">
                       {msg.status == "pending" ? "❌" : "✅"}
                     </span>

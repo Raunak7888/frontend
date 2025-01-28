@@ -21,7 +21,15 @@ const LoginPage = () => {
     setError('');
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/login`, { email, password });
+        const response = await axios.post(
+          `${API_BASE_URL}/login`,
+          { "email":email, "password":password },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }}
+        );
+      
 
       if (response.status === 200) {
         const token = response.data.token;

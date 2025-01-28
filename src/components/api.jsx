@@ -26,7 +26,7 @@ export const fetchMessagesUntilLastDay = async (senderId, receiverId,isGroup) =>
                 isGroup,
             },
         });
-        console.log(response);
+        console.log("Previous Messages: ",response);
         return response.data; // Assuming the API returns an array of messages
     } catch (error) {
         console.error('Error fetching messages:', error);
