@@ -13,7 +13,7 @@ const Logout = () => {
 
       // Delete the token from cookies
       Cookies.remove("Authorization", { secure: true, sameSite: "Strict" });
-
+      localStorage.clear();
       console.log("Logout successful");
       navigate("/login"); // Redirect to login page or any other desired page
     } catch (error) {

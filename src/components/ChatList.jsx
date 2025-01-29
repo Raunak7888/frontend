@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { searchUsers } from "./api";
+import ChatUtil from "./ChatUtil";
 
 const ChatList = ({ onChatSelect }) => {
   const [query, setQuery] = useState("");
@@ -8,7 +9,16 @@ const ChatList = ({ onChatSelect }) => {
     return JSON.parse(localStorage.getItem("chatList")) || [];
   });
   const [activeChat, setActiveChat] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // Handle search input change
   const handleSearchChange = useCallback(async (e) => {
     const newQuery = e.target.value.trim();
@@ -66,9 +76,15 @@ const ChatList = ({ onChatSelect }) => {
   return (
     <div className="chat-sidebar">
       <div className="chat-sidebar-header">
-        <h1>Chat App</h1>
+        <span className="h1">Chat App</span>
+        {isMobile ? (
+        <div className="chat-help-utils-Mobile">
+           {/* idar logout and create group add karna hai */}
+            <ChatUtil/>
+        </div>):null}
       </div>
       <div className="chat-sidebar-search">
+        {/* <div className="search-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></div> */}
         <input
           type="text"
           placeholder="Search users or groups"
@@ -106,7 +122,7 @@ const ChatList = ({ onChatSelect }) => {
             </div>
           ))
         ) : (
-          <div className="chat-list-item">No active chats</div>
+          <div className="chat-list-item"><span className="chat-name">No active chats</span></div>
         )}
       </div>
     </div>
