@@ -802,3 +802,177 @@ img {
   justify-content: center;
   rotate: 45deg;
 }
+/* === Overlay (Modal Background) === */
+.file-upload-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Glassmorphism effect */
+}
+
+/* === Modal Box === */
+.file-upload-content {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  padding: 25px;
+  background: linear-gradient(135deg, #1e1f22, #282b30);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* === Title === */
+.file-upload-title {
+  color: #87cbf4;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+/* === File Input === */
+.file-upload-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: #2c2f33;
+  color: #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* === Custom File Input Button === */
+.file-upload-input[type="file"]::file-selector-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #87cbf4;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* === Hover Effect === */
+.file-upload-input[type="file"]::file-selector-button:hover {
+  background-color: #6ba6d6;
+  transform: scale(1.05);
+}
+
+/* === Focus Effect === */
+.file-upload-input[type="file"]::file-selector-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(135, 203, 244, 0.8);
+}
+
+/* === Disabled State === */
+.file-upload-input[type="file"]::file-selector-button:disabled {
+  background-color: #4f92b2;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 600px) {
+  .file-upload-input[type="file"]::file-selector-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+
+
+.file-upload-input:hover,
+.file-upload-input:focus {
+  border-color: #87cbf4;
+}
+
+/* === Upload Button === */
+.file-upload-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background-color: #87cbf4;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.file-upload-button:hover {
+  background-color: #6ba6d6;
+  transform: scale(1.02);
+}
+
+.file-upload-button:disabled {
+  background-color: #4f92b2;
+  cursor: not-allowed;
+}
+
+/* === Close Button (X) === */
+.file-upload-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ff5f5f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.file-upload-close-button:hover {
+  background-color: #e04e4e;
+  transform: scale(1.1);
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === Responsive Styles === */
+@media (max-width: 600px) {
+  .file-upload-content {
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+  }
+  
+  .file-upload-title {
+    font-size: 20px;
+  }
+
+  .file-upload-button {
+    font-size: 14px;
+  }
+}
