@@ -9,14 +9,28 @@ const Ok = () => {
     const savedUserId = localStorage.getItem("selectedUserId");
     return savedUserId ? JSON.parse(savedUserId) : null;
   });
+
   const [selectedUsername, setSelectedUsername] = useState(() => {
     const savedUsername = localStorage.getItem("selectedUsername");
     return savedUsername ? JSON.parse(savedUsername) : null;
   });
-  const [isGroup, setIsGroup] = useState(() => {
+
+  const [selectedIsGroup, setSelectedIsGroup] = useState(() => {
     const savedIsGroup = localStorage.getItem("isGroup");
     return savedIsGroup ? JSON.parse(savedIsGroup) : null;
   });
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+  const [showChatWindow, setShowChatWindow] = useState(false); // Default to false
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Initialize WebSocket connection on mount
   useEffect(() => {
@@ -25,7 +39,7 @@ const Ok = () => {
       .find((row) => row.startsWith("Authorization="))
       ?.split("=")[1];
 
-    if (token && !WebSocketService.client?.connected) {
+    if (token && (!WebSocketService.client || !WebSocketService.client.connected)) {
       WebSocketService.connect(
         () => console.log("WebSocket connected"),
         (error) => console.error("WebSocket connection error:", error),
@@ -36,43 +50,46 @@ const Ok = () => {
 
   // Handle user selection for chats
   const handleUserSelect = useCallback(
-    (id, name, isGroup) => {
-      if (
-        id !== selectedUserId ||
-        name !== selectedUsername ||
-        isGroup !== isGroup
-      ) {
+    (id, name, isGroup, isShowChatWindow) => {
+      if (id !== selectedUserId || name !== selectedUsername || isGroup !== selectedIsGroup) {
         setSelectedUserId(id);
         setSelectedUsername(name);
-        setIsGroup(isGroup);
+        setSelectedIsGroup(isGroup);
+        setShowChatWindow(isShowChatWindow);
 
         localStorage.setItem("selectedUserId", JSON.stringify(id));
         localStorage.setItem("selectedUsername", JSON.stringify(name));
         localStorage.setItem("isGroup", JSON.stringify(isGroup));
       }
     },
-    [selectedUserId, selectedUsername, isGroup]
+    [selectedUserId, selectedUsername, selectedIsGroup]
   );
 
   return (
     <div className="chat-container">
+      {/* Sidebar - Chat List */}
       <div className="sidebar">
-        <ChatList onChatSelect={handleUserSelect} />
+        <ChatList onChatSelect={handleUserSelect} isMobile={isMobile} setShowChatWindow={setShowChatWindow} />
       </div>
-      <div className="chat-area">
-        {WebSocketService.client?.connected &&
-        selectedUserId &&
-        selectedUsername ? (
-          <ChatWindow
-            recipientId={selectedUserId}
-            recipientUsername={selectedUsername}
-            isGroup={isGroup}
-            ready={WebSocketService.client?.connected}
-          />
-        ) : (
-          <div className="no-chat">Select a user to start chatting</div>
-        )}
-      </div>
+
+      {/* Chat Window - Always Visible on Desktop, Conditional on Mobile */}
+      {(!isMobile || showChatWindow) && (
+        <div className="chat-area">
+          {WebSocketService.client?.connected && selectedUserId && selectedUsername ? (
+            <ChatWindow
+              recipientId={selectedUserId}
+              recipientUsername={selectedUsername}
+              isGroup={selectedIsGroup}
+              isMobile={isMobile}
+              setShowChatWindow={setShowChatWindow}
+            />
+          ) : (
+            <div className="no-chat">Select a user to start chatting</div>
+          )}
+        </div>
+      )}
+
+      {/* Utility Panel */}
       <div className="chat-help-utils">
         <ChatUtil />
       </div>

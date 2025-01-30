@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChatManager from "./ChatManager";
 import WebSocketService from "./WebSocketService";
 
-const FileUpload = ({ onClose, currentUser, receiverId, setMessages }) => {
+const FileUpload = ({ onClose, currentUser, receiverId, setMessages,isMobile }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 

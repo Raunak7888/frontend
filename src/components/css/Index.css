@@ -620,27 +620,21 @@ img {
   }
 
   .send-button {
-    padding: 8px 16px;
+    padding-left: 9px;
+    padding-right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     font-size: 12px;
+    width: 45px;
+    border-radius: 50%;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
-.file-button {
-  margin-right: 10px;
-  padding: 0%;
-  background-color: #7432ca;
-  color: #ffeed6;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  height: 40px;
-  width: 40px;
-  font-size: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .file-button:hover {
   background-color: #8b54d4;
@@ -684,7 +678,7 @@ img {
   display: flex;
   justify-content: end;
   align-items: end;
-  width: 55%;
+  max-width: 55%;
 }
 
 .chat-image img:hover {
@@ -762,6 +756,22 @@ img {
     gap: 10px; /* Adds space between the buttons */
 }
 
+.chat-header{
+  display: flex;
+}
+
+.chat-window-header-detail{
+  margin-left: 20px;
+}
+
+.chat-area{
+  padding: 5px;
+}
+
+.back-arrow-div{
+  width: 40px;
+  display: flex;
+}
 
 }
 
@@ -771,4 +781,24 @@ img {
   background-size: 20px 20px;
   background-repeat: no-repeat;
   background-position: 10px center; /* Position the icon */
+}
+
+.attach-file{
+  padding:0px;
+}
+
+.file-button {
+  margin-right: 10px;
+  padding-left: 9px;
+  padding-right: 8px;
+  background-color: #7432ca;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  height: 45px;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  rotate: 45deg;
 }

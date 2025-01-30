@@ -2,23 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import { searchUsers } from "./api";
 import ChatUtil from "./ChatUtil";
 
-const ChatList = ({ onChatSelect }) => {
+const ChatList = ({ onChatSelect,isMobile,setShowChatWindow }) => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [chatList, setChatList] = useState(() => {
     return JSON.parse(localStorage.getItem("chatList")) || [];
   });
   const [activeChat, setActiveChat] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 500);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  
   // Handle search input change
   const handleSearchChange = useCallback(async (e) => {
     const newQuery = e.target.value.trim();
@@ -54,6 +45,7 @@ const ChatList = ({ onChatSelect }) => {
       setSearchResults([]);
       setQuery("");
       onChatSelect(chat.id, chat.name, chat.group);
+      setShowChatWindow(true)
     },
     [chatList, onChatSelect]
   );
@@ -63,6 +55,7 @@ const ChatList = ({ onChatSelect }) => {
     (chat) => {
       setActiveChat(chat);
       onChatSelect(chat.id, chat.name, chat.group);
+      setShowChatWindow(true)
       console.log("Chat clicked:");
     },
     [onChatSelect]

@@ -6,13 +6,12 @@ import { getCurrentUserWithToken, fetchMessagesUntilLastDay } from "./api";
 import FileUpload from "./Files";
 import FileView from "./FilesView";
 
-const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
+const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowChatWindow}) => {
   const [messages, setMessages] = useState([]);
   const [messageContent, setMessageContent] = useState("");
   const [status, setStatus] = useState("Unknown");
   const [currentUser, setCurrentUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-
   const chatEndRef = useRef(null);
 
   const toggleModal = () => {
@@ -168,6 +167,17 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
     }
   };
 
+  const handleBackButtonClick = () => {
+    console.log("setShowChatWindow is not a function:", setShowChatWindow);
+    
+    if (typeof setShowChatWindow === "function") {
+      setShowChatWindow(false); // Properly update state
+    } else {
+      console.warn("setShowChatWindow is not a function:", setShowChatWindow);
+    }
+  };
+  
+  
   const handleSendClick = useCallback(() => {
     if (messageContent.trim() && currentUser) {
       const tempId = Date.now();
@@ -204,6 +214,13 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
   return (
     <div className="chat-area">
       <div className="chat-header">
+        {isMobile ? (
+        <div className="back-arrow-div">
+          <button className="back-arrow-button" onClick={handleBackButtonClick}>
+            <img src="src/components/css/Images.css/back_arrow.png" className="back-arrow-img" />
+          </button>
+        </div>):null}
+        <div className="chat-window-header-detail">
         <span className="chat-contact-name">
           {recipientUsername.charAt(0).toUpperCase() +
             recipientUsername.slice(1) || "Group Chat"}
@@ -214,6 +231,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
             {status}
           </span>
         )}
+        </div>
       </div>
 
       <div className="message-display">
@@ -234,7 +252,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
                   }
                 >
                   {msg.content}
-                  {msg.senderId === currentUser && (
+                  {msg.senderId == currentUser && (
                     <span className="message-status">
                       {msg.status == "pending" ? "❌" : "✅"}
                     </span>
@@ -249,7 +267,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
 
       <div className="input-area">
         <button className="file-button" onClick={toggleModal}>
-          <span>+</span>
+          <img src="src/components/css/Images.css/attach_file_icon.png" className="attach-file" />
         </button>
 
         {/* Show the FileUpload modal when isModalOpen is true */}
@@ -259,6 +277,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
             currentUser={currentUser}
             receiverId={recipientId}
             setMessages={setMessages}
+            isMobile={isMobile}
           />
         )}
         <input
@@ -269,9 +288,11 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup }) => {
           onChange={(e) => setMessageContent(e.target.value)}
           onKeyDown={handleKeyPress}
         />
+        
         <button className="send-button" onClick={handleSendClick}>
-          Send
+        { isMobile ? (<img src="src/components/css/Images.css/send_icon_button.png"></img>):("send")}
         </button>
+        
       </div>
     </div>
   );
