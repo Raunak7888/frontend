@@ -30,7 +30,7 @@ const OnlineStatusService = {
       console.error("User ID is required to request status.");
       return;
     }
-    console.log("Requesting user status for:", userId);
+    // console.log("Requesting user status for:", userId);
     stompClient.send("/app/topic/status", {}, JSON.stringify({ userId }));
   },
 };

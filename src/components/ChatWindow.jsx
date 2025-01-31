@@ -42,7 +42,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
     if (!recipientId || !currentUser || currentUser === recipientId) return;
 
     try {
-      console.log("Hey Trying to get the previous messages!!!");
+      // console.log("Hey Trying to get the previous messages!!!");
       const previousMessages = await fetchMessagesUntilLastDay(
         currentUser,
         recipientId,
@@ -83,7 +83,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
       WebSocketService.client,
       currentUser,
       (ackMessage) => {
-        console.log("Received ack:", ackMessage);
+        // console.log("Received ack:", ackMessage);
 
         if (ackMessage.content !== "---FILE---") {
           // Handle normal text message acknowledgment
@@ -129,7 +129,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
 
           // Log updated messages safely using a callback
           setMessages((prev) => {
-            console.log("Updated Messages: ", prev);
+            // console.log("Updated Messages: ", prev);
             return prev; // Return the unchanged state
           });
         }
@@ -137,7 +137,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
       isGroup,
       recipientId
     );
-    console.log("Updated Messages: ", messages);
+    // console.log("Updated Messages: ", messages);
 
     if (!isGroup) {
       const statusSubscription = OnlineStatusService.subscribeToStatusUpdates(
@@ -161,14 +161,14 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
   }, [recipientId, currentUser, isGroup, loadMessages]);
 
   const handleKeyPress = (e) => {
-    console.log(`Key pressed: ${e.key}`); // Debugging line
+    // console.log(`Key pressed: ${e.key}`); // Debugging line
     if (e.key === "Enter") {
       handleSendClick();
     }
   };
 
   const handleBackButtonClick = () => {
-    console.log("setShowChatWindow is not a function:", setShowChatWindow);
+    // console.log("setShowChatWindow is not a function:", setShowChatWindow);
     
     if (typeof setShowChatWindow === "function") {
       setShowChatWindow(false); // Properly update state
@@ -290,7 +290,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
         />
         
         <button className="send-button" onClick={handleSendClick}>
-        { isMobile ? (<img src="src/components/css/Images.css/send_icon_button.png"></img>):("send")}
+        send
         </button>
         
       </div>

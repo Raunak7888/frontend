@@ -16,7 +16,7 @@ const WebSocketService = {
         const headers = token ? { Authorization: token } : {};
 
         this.client.connect(headers, () => {
-            console.log('WebSocket connected');
+            // console.log('WebSocket connected');
             onConnected();  // callback when connected
         }, (error) => {
             console.error('WebSocket connection error:', error);
@@ -43,7 +43,7 @@ const WebSocketService = {
     send(receiverId, message) {
         if (this.client && this.client.connected) {
             const destination = `/send/message/${receiverId}`;
-            console.log("Sending message to:", destination);
+            // console.log("Sending message to:", destination);
             this.client.send(destination, {}, JSON.stringify(message));  // Send to the destination
         } else {
             console.error("WebSocket is not connected.");

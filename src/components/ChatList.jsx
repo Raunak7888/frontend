@@ -56,15 +56,15 @@ const ChatList = ({ onChatSelect,isMobile,setShowChatWindow }) => {
       setActiveChat(chat);
       onChatSelect(chat.id, chat.name, chat.group);
       setShowChatWindow(true)
-      console.log("Chat clicked:");
+      // console.log("Chat clicked:");
     },
     [onChatSelect]
   );
 
   // Effect for logging updates to the chat list (optional for debugging)
-  useEffect(() => {
-    console.log("Updated Chat List:", chatList);
-  }, [chatList]);
+  // useEffect(() => {
+  //   console.log("Updated Chat List:", chatList);
+  // }, [chatList]);
 
   return (
     <div className="chat-sidebar">

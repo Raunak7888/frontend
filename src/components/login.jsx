@@ -37,7 +37,7 @@ const LoginPage = () => {
         // Set JWT as a cookie with js-cookie
         Cookies.set('Authorization', "Bearer " + token, { expires: 1, secure: true, sameSite: 'Strict' });
 
-        console.log('Login successful');
+        // console.log('Login successful');
         navigate('/chat');
       }
     } catch (err) {

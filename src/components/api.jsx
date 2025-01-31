@@ -72,7 +72,7 @@ export const getCurrentUserWithToken = async () => {
 
         // Parse response as plain text since API returns a string (e.g., user ID)
         const userId = await response.text();
-        console.log('Fetched user ID:', userId);
+        // console.log('Fetched user ID:', userId);
         return userId; // Return the user ID as a string
     } catch (error) {
         console.error('Error in getCurrentUserWithToken:', error.message);

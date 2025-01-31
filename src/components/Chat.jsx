@@ -57,7 +57,7 @@ const Chat = ({ currentUser }) => {
         if (stompClient) {
             const statusSubscription = stompClient.subscribe(`/topic/status`, (msg) => {
                 const statusUpdate = JSON.parse(msg.body);
-                console.log("Status update received:", statusUpdate);
+                // console.log("Status update received:", statusUpdate);
                 if (statusUpdate.userId === recipientId) {
                     setIsOnline(statusUpdate.isOnline);
                 }

@@ -5,24 +5,24 @@ const ChatManager = {
    * @param {Object} messageDTO - The message DTO containing senderId, receiverId, content, and isGroup flag
    */
   sendMessage(stompClient, messageDTO) {
-    console.log(messageDTO.receiverId, messageDTO.content, messageDTO.isGroup);
+    // console.log(messageDTO.receiverId, messageDTO.content, messageDTO.isGroup);
     const destination = messageDTO.isGroup
       ? `/app/group/message` // Group message endpoint
       : `/app/send/message`; // Private message endpoint
-    console.log(destination + "Destination For Sending Message");
+    // console.log(destination + "Destination For Sending Message");
     if (stompClient) {
       stompClient.send(destination, {}, JSON.stringify(messageDTO));
     }
   },
 
   sendImage(stompClient, fileDTO) {
-    console.log(fileDTO.receiverId,fileDTO.userId ,fileDTO.tempID, fileDTO.status);
+    // console.log(fileDTO.receiverId,fileDTO.userId ,fileDTO.tempID, fileDTO.status);
     const destination = `/app/send/image`; // Private message endpoint
     // messageDTO.isGroup
     //   ? `/app/group/message` // Group message endpoint
     //   : 
       
-    console.log(destination + "Destination For Sending Message");
+    // console.log(destination + "Destination For Sending Message");
     if (stompClient) {
       stompClient.send(destination, {}, JSON.stringify(fileDTO));
     }
@@ -55,7 +55,7 @@ const ChatManager = {
    */
   subscribeToSender(stompClient, senderId, callback, isGroup) {
     const destination = isGroup ? `/topic/group/${senderId}/ack` : `/topic/user/${senderId}/queue/ack`; // Subscription for sender-specific messages
-    console.log(destination + " Destination for Sender Subscriptions");
+    // console.log(destination + " Destination for Sender Subscriptions");
 
     if (stompClient) {
       return stompClient.subscribe(destination, (msg) => {

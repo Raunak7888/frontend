@@ -6,17 +6,17 @@ import ChatUtil from "./ChatUtil";
 
 const Ok = () => {
   const [selectedUserId, setSelectedUserId] = useState(() => {
-    const savedUserId = localStorage.getItem("selectedUserId");
+    const savedUserId = sessionStorage.getItem("selectedUserId");
     return savedUserId ? JSON.parse(savedUserId) : null;
   });
 
   const [selectedUsername, setSelectedUsername] = useState(() => {
-    const savedUsername = localStorage.getItem("selectedUsername");
+    const savedUsername = sessionStorage.getItem("selectedUsername");
     return savedUsername ? JSON.parse(savedUsername) : null;
   });
 
   const [selectedIsGroup, setSelectedIsGroup] = useState(() => {
-    const savedIsGroup = localStorage.getItem("isGroup");
+    const savedIsGroup = sessionStorage.getItem("isGroup");
     return savedIsGroup ? JSON.parse(savedIsGroup) : null;
   });
 
@@ -57,9 +57,9 @@ const Ok = () => {
         setSelectedIsGroup(isGroup);
         setShowChatWindow(isShowChatWindow);
 
-        localStorage.setItem("selectedUserId", JSON.stringify(id));
-        localStorage.setItem("selectedUsername", JSON.stringify(name));
-        localStorage.setItem("isGroup", JSON.stringify(isGroup));
+        sessionStorage.setItem("selectedUserId", JSON.stringify(id));
+        sessionStorage.setItem("selectedUsername", JSON.stringify(name));
+        sessionStorage.setItem("isGroup", JSON.stringify(isGroup));
       }
     },
     [selectedUserId, selectedUsername, selectedIsGroup]
