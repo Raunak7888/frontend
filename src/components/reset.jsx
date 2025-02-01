@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from './backend_url';
+import RandomPageTransition from './randomPageTrasition';
 
 const API_BASE_URL = `${config.apiBaseUrl}/auth`; // Update with your actual backend URL
 
@@ -40,6 +41,7 @@ const ResetPasswordPage = () => {
   };
 
   return (
+    <RandomPageTransition>  
     <div className="center">
       <div className="anime">
     <div className="card">
@@ -85,6 +87,7 @@ const ResetPasswordPage = () => {
     </div>
     </div>
     </div>
+    </RandomPageTransition>
   );
 };
 

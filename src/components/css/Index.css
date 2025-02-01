@@ -967,7 +967,6 @@ button {
   z-index: -1;
   border-radius: inherit;
   animation: 5s spin linear infinite;
-  animation-delay: 3s;
 }
 
 @keyframes spin {

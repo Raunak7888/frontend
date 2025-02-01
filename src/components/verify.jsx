@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from './backend_url';
+import RandomPageTransition from './randomPageTrasition';
 
 const API_BASE_URL = `${config.apiBaseUrl}/auth`; 
 
@@ -33,6 +34,7 @@ const VerifyPage = () => {
   };
 
   return (
+    <RandomPageTransition>
     <div className="center">
       <div className="anime">
       <div className="card">
@@ -67,7 +69,7 @@ const VerifyPage = () => {
       </div>
       </div>
     </div>
-
+    </RandomPageTransition>
   );
 };
 

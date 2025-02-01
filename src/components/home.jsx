@@ -53,23 +53,23 @@ function HeroSection() {
           Experience seamless communication with our modern chat platform. Stay connected with friends, family, and colleagues in real-time.
         </p>
         <div className="hero-buttons">
-          <button className="get-started-btn animate-slide-up"  onClick={() => navigate('/signup')} style={{ animationDelay: '400ms' }}>
+          <button className="get-started-btn animate-bounce-in"  onClick={() => navigate('/signup')} style={{ animationDelay: '400ms' }}>
             Get Started <ArrowRight size={20} className="animate-bounce-x" />
           </button>
-          <button className="learn-more-btn animate-slide-up" style={{ animationDelay: '500ms' }}>
+          <button className="learn-more-btn animate-bounce-in" style={{ animationDelay: '500ms' }}>
             Learn More <ChevronRight size={20} className="animate-slide-x" />
           </button>
         </div>
         <div className="hero-stats">
-          <div className="stat animate-slide-up" style={{ animationDelay: '600ms' }}>
+          <div className="stat animate-bounce-in" style={{ animationDelay: '600ms' }}>
             <span className="stat-number animate-count">10M+</span>
             <span className="stat-label">Active Users</span>
           </div>
-          <div className="stat animate-slide-up" style={{ animationDelay: '700ms' }}>
+          <div className="stat animate-bounce-in" style={{ animationDelay: '700ms' }}>
             <span className="stat-number animate-count">99.9%</span>
             <span className="stat-label">Uptime</span>
           </div>
-          <div className="stat animate-slide-up" style={{ animationDelay: '800ms' }}>
+          <div className="stat animate-bounce-in" style={{ animationDelay: '800ms' }}>
             <span className="stat-number animate-count">4.9★</span>
             <span className="stat-label">User Rating</span>
           </div>
