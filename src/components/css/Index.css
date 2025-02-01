@@ -608,7 +608,7 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.5fr repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -854,8 +854,8 @@ button {
 }
 
 .input-field:focus {
-  border-color: #7432ca;
-  box-shadow: 0 0 10px #7432ca;
+  border-color: #dd00ff;
+  box-shadow: 0 0 5px #dd00ff;
   transition: box-shadow 0.5s ease-in-out;
   background-color: #232121;
 }
@@ -967,6 +967,7 @@ button {
   z-index: -1;
   border-radius: inherit;
   animation: 5s spin linear infinite;
+  animation-delay: 3s;
 }
 
 @keyframes spin {
