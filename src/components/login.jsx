@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import config from './backend_url';
+import RandomPageTransition from './randomPageTrasition';
 import "./init";
 
 const API_BASE_URL = `${config.apiBaseUrl}/auth`; // Update with your actual backend URL
@@ -50,7 +51,9 @@ const LoginPage = () => {
   };
 
   return (
+    <RandomPageTransition>
     <div className="center">
+      <div className="anime">
       <div className="card">
         <h1 className='heading-primary'>Welcome to Chat App</h1>
         <h2 className='heading-secondary'>Login</h2>
@@ -83,7 +86,9 @@ const LoginPage = () => {
         <p className='pt-10'>Don't have an account? <span className ='link' onClick={() => navigate('/signup')}>Sign up here</span></p>
         <p className='pt-3'>Forgot your password? <span className ='link' onClick={() => navigate('/forgot')}>Reset here</span></p>
       </div>
+      </div>
     </div>
+    </RandomPageTransition>
   );
 };
 
