@@ -30,6 +30,7 @@ const Logout = () => {
 
   return (
       <div className="center">
+        <div className="anime">
         <div className="card">
           <p className="heading-primary white-text">Are you sure you want to logout?</p>
           <button className="card-button logout-yes-button" onClick={handleLogout}>
@@ -39,6 +40,7 @@ const Logout = () => {
             No
           </button>
         </div>
+      </div>
       </div>
   );
 };

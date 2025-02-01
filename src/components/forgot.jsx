@@ -29,6 +29,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="center">
+      <div className="anime">
       <div className="card">
         <form onSubmit={handleForgotPassword}>
           <h2 className='heading-secondary'>Forgot Password</h2>
@@ -47,6 +48,7 @@ const ForgotPasswordPage = () => {
           {message && <p className="message-success">{message}</p>}
           {error && <p className="message-error">{error}</p>}
         </form>
+      </div>
       </div>
     </div>
   );

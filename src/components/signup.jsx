@@ -43,6 +43,7 @@ const SignupPage = () => {
   return (
     <RandomPageTransition>
     <div className="center">
+      <div className="anime">
       <div className="card">
         <h2 className="heading-secondary">Sign Up</h2>
         <form onSubmit={handleSignup} className="form-group">
@@ -89,6 +90,7 @@ const SignupPage = () => {
         <p>
           Already have an account? <span className="link" onClick={() => navigate('/login')}>Login here</span>
         </p>
+      </div>
       </div>
     </div>
     </RandomPageTransition>

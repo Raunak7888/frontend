@@ -34,6 +34,7 @@ const VerifyPage = () => {
 
   return (
     <div className="center">
+      <div className="anime">
       <div className="card">
         <h2 className="heading-secondary">Verify Your Email</h2>
         <form className="form-group" onSubmit={handleVerify}>
@@ -64,7 +65,7 @@ const VerifyPage = () => {
           <button className="card-button" type="submit">Verify</button>
         </form>
       </div>
-      
+      </div>
     </div>
 
   );

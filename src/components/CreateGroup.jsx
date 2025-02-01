@@ -87,7 +87,8 @@ const CreateGroup = () => {
   };
 
   return (
-    <div className="center">
+    <div className="center ">
+      <div className="anime">
       <div className="card shadow">
         <h2 className="heading-primary">Create a New Group</h2>
         <form onSubmit={handleSubmit} className="form-group">
@@ -173,6 +174,7 @@ const CreateGroup = () => {
         {errorMessage && (
           <p className="error-message message-error">{errorMessage}</p>
         )}
+      </div>
       </div>
     </div>
   );

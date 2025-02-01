@@ -41,6 +41,7 @@ const ResetPasswordPage = () => {
 
   return (
     <div className="center">
+      <div className="anime">
     <div className="card">
       <h2 className='heading-secondary'>Reset Password</h2>
       <form className='form-group' onSubmit={handleResetPassword}>
@@ -81,6 +82,7 @@ const ResetPasswordPage = () => {
         {success && <p className="success">{success}</p>}
         <button className="card-button" type="submit">Reset Password</button>
       </form>
+    </div>
     </div>
     </div>
   );

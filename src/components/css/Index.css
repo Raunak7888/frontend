@@ -844,7 +844,7 @@ button {
 .input-field {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid #9b9ece;
+  border: 2px solid #7432ca;
   border-radius: 25px;
   background-color: #232121;
   color: #ffeed6;
@@ -854,8 +854,8 @@ button {
 }
 
 .input-field:focus {
-  border-color: #87cbf4;
-  box-shadow: 0 0 5px #87cbf4;
+  border-color: #7432ca;
+  box-shadow: 0 0 10px #7432ca;
   transition: box-shadow 0.5s ease-in-out;
   background-color: #232121;
 }
@@ -930,64 +930,55 @@ button {
 /* Card Styling */
 .card {
   background-color: #464948;
-  /* color: #ffeed6; */
+  color: #ffeed6;
   padding: 20px;
   border-radius: 15px;
-  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   width: 400px;
 }
 
 .anime {
-  position: absolute;
+  position: relative; 
   display: flex;
   justify-content: center;
   align-self: center;
   background-color: inherit;
   color: #ffeed6;
-  padding: 4px;
+  padding: 5px;
   border-radius: 15px;
   width: 400px;
   overflow: hidden;
-  z-index: -1;
 }
 
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+} 
 /* Animated glowing border */
 .anime::after,.anime::before {
   content: "";
   position: absolute;
-
-  height: 100%;
+  height: 104%;
   width: 100%;
-  /* background-image: conic-gradient(from 50deg, transparent 90%,#7432ca); */
-  background-image: conic-gradient(#7432ca, #b86eff, #7432ca);
-  /* top: 100%; */
-  /* left: 100%; */
+  top: -4px;
+  background-image: conic-gradient(from var(--angle), transparent 90%, #7432ca,#9a03ff,#8000ff);
   translate: -50%,-50%;
   z-index: -1;
   border-radius: inherit;
-
+  animation: 5s spin linear infinite;
 }
 
-.card::before{
-  filter: blur(1.5rem);
-  opacity: 0.5;
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
 }
-
 /* Keyframes for smooth animated border */
-@keyframes borderMove {
-  0% {
-    transform: translateX(-100%) rotate(0deg);
-    background: linear-gradient(90deg, #7432ca, #b86eff, #7432ca);
-  }
-  50% {
-    transform: translateX(100%) rotate(180deg);
-    background: linear-gradient(180deg, #b86eff, #7432ca, #b86eff);
-  }
-  100% {
-    transform: translateX(-100%) rotate(360deg);
-    background: linear-gradient(270deg, #7432ca, #b86eff, #7432ca);
-  }
-}
+
 
 /* Utility Classes */
 .shadow {
