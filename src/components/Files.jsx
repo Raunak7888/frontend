@@ -2,17 +2,35 @@ import React, { useState } from "react";
 import ChatManager from "./ChatManager";
 import WebSocketService from "./WebSocketService";
 
-const FileUpload = ({ onClose, currentUser, receiverId,isGroup }) => {
+const MAX_FILE_SIZE = 256 * 1024; // 256 KB
+
+const FileUpload = ({ onClose, currentUser, receiverId, isGroup }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(""); // Error message state
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      if (selectedFile.size > MAX_FILE_SIZE) {
+        setError("File size exceeds 256 KB. Please select a smaller file. This project is still development phase.");
+        setFile(null);
+      } else {
+        setError(""); // Clear previous error
+        setFile(selectedFile);
+      }
+    }
   };
 
   const handleUpload = async () => {
     if (!file) {
       alert("Please select a file to upload.");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert("File size exceeds 256 KB. Cannot upload.");
       return;
     }
 
@@ -35,11 +53,13 @@ const FileUpload = ({ onClose, currentUser, receiverId,isGroup }) => {
         receiverId: receiverId,
         tempId: tempId,
         status: "pending",
-        isGroup: `${isGroup}`
+        isGroup: `${isGroup}`,
       };
+
       console.log(fileDTO);
+
       // Send file via WebSocket
-      ChatManager.sendImage(WebSocketService.client, fileDTO,isGroup, () => {
+      ChatManager.sendImage(WebSocketService.client, fileDTO, isGroup, () => {
         console.log("File sent successfully.");
       });
 
@@ -53,11 +73,22 @@ const FileUpload = ({ onClose, currentUser, receiverId,isGroup }) => {
     <div className="file-upload-overlay">
       <div className="file-upload-content">
         <h2 className="file-upload-title">Send Image</h2>
-        <input className="file-upload-input" type="file" onChange={handleFileChange} />
-        <button className="file-upload-button" onClick={handleUpload} disabled={uploading}>
+        <input
+          className="file-upload-input"
+          type="file"
+          onChange={handleFileChange}
+        />
+        {error && <p className="error-message">{error}</p>} {/* Show error message */}
+        <button
+          className="file-upload-button"
+          onClick={handleUpload}
+          disabled={uploading || !file}
+        >
           {uploading ? "Uploading..." : "Upload"}
         </button>
-        <button className="file-upload-close-button" onClick={onClose}>×</button>
+        <button className="file-upload-close-button" onClick={onClose}>
+          ×
+        </button>
       </div>
     </div>
   );
