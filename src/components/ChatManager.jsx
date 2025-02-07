@@ -15,16 +15,13 @@ const ChatManager = {
     }
   },
 
-  sendImage(stompClient, fileDTO) {
+  sendImage(stompClient, fileDTO,isGroup) {
     // console.log(fileDTO.receiverId,fileDTO.userId ,fileDTO.tempID, fileDTO.status);
     const destination = `/app/send/image`; // Private message endpoint
-    // messageDTO.isGroup
-    //   ? `/app/group/message` // Group message endpoint
-    //   : 
       
     // console.log(destination + "Destination For Sending Message");
     if (stompClient) {
-      stompClient.send(destination, {}, JSON.stringify(fileDTO));
+      stompClient.send(destination, {}, JSON.stringify(fileDTO),isGroup);
     }
   },
 

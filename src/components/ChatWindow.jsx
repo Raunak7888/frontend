@@ -276,8 +276,7 @@ const ChatWindow = ({ recipientId, recipientUsername, isGroup ,isMobile,setShowC
             onClose={toggleModal}
             currentUser={currentUser}
             receiverId={recipientId}
-            setMessages={setMessages}
-            isMobile={isMobile}
+            isGroup={isGroup}
           />
         )}
         <input

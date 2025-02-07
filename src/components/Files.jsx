@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChatManager from "./ChatManager";
 import WebSocketService from "./WebSocketService";
 
-const FileUpload = ({ onClose, currentUser, receiverId, setMessages, isMobile }) => {
+const FileUpload = ({ onClose, currentUser, receiverId,isGroup }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -35,10 +35,11 @@ const FileUpload = ({ onClose, currentUser, receiverId, setMessages, isMobile })
         receiverId: receiverId,
         tempId: tempId,
         status: "pending",
+        isGroup: `${isGroup}`
       };
-
+      console.log(fileDTO);
       // Send file via WebSocket
-      ChatManager.sendImage(WebSocketService.client, fileDTO, () => {
+      ChatManager.sendImage(WebSocketService.client, fileDTO,isGroup, () => {
         console.log("File sent successfully.");
       });
 
