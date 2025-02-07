@@ -40,7 +40,6 @@ const ChatList = ({ onChatSelect,isMobile,setShowChatWindow }) => {
         setChatList(updatedList);
         localStorage.setItem("chatList", JSON.stringify(updatedList));
       }
-
       setActiveChat(chat);
       setSearchResults([]);
       setQuery("");
